@@ -7,7 +7,6 @@ import com.example.order.dto.response.OrderItemResponse;
 import com.example.order.dto.response.OrderResponse;
 import com.example.order.entity.Order;
 import com.example.order.service.OrderService;
-import com.example.order.utils.OrderMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,14 +85,14 @@ public class OrderControllerTest {
     // ------------------- GET ORDER BY ID -------------------
     @Test
     void testGetOrderById() throws Exception {
-        Mockito.when(orderService.getOrderById(eq(1L))).thenReturn(orderResponse);
+        Mockito.when(orderService.getOrder(eq(1L))).thenReturn(orderResponse);
 
         mockMvc.perform(get("/api/order/{orderId}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.orderId").value(1L))
                 .andExpect(jsonPath("$.customerId").value(123L));
 
-        verify(orderService).getOrderById(eq(1L));
+        verify(orderService).getOrder(eq(1L));
         verifyNoMoreInteractions(orderService);
     }
 

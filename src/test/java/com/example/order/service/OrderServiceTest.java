@@ -4,7 +4,6 @@ package com.example.order.service;
 import com.example.order.dto.enums.OrderStatus;
 import com.example.order.dto.request.OrderItemRequestDTO;
 import com.example.order.dto.request.OrderRequest;
-import com.example.order.dto.response.OrderItemResponse;
 import com.example.order.dto.response.OrderResponse;
 import com.example.order.entity.Order;
 import com.example.order.entity.OrderItem;
@@ -71,7 +70,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    void testGetOrderByIdFound() {
+    void testGetOrderFound() {
         Long orderId = 1L;
         Order order = Order.builder()
                 .id(orderId)
@@ -91,18 +90,18 @@ public class OrderServiceTest {
 
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
 
-        OrderResponse response = orderProcessingService.getOrderById(orderId);
+        OrderResponse response = orderProcessingService.getOrder(orderId);
 
         assertEquals(orderId, response.orderId());
         assertEquals(1, response.items().size());
     }
 
     @Test
-    void testGetOrderByIdNotFound() {
+    void testGetOrderNotFound() {
         Long orderId = 999L;
         when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> orderProcessingService.getOrderById(orderId));
+        assertThrows(NotFoundException.class, () -> orderProcessingService.getOrder(orderId));
     }
 
     @Test
