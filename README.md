@@ -13,7 +13,7 @@ A Spring Boot backend application for E-commerce Order Management, supporting or
 - [Pagination](#pagination)  
 - [Exception Handling](#exception-handling)   
 - [Testing](#testing)  
-- [Setup](#setup)  
+- [Setup](#Prerequisites)  
 
 ---
 
