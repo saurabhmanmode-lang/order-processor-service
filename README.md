@@ -11,8 +11,7 @@ A Spring Boot backend application for E-commerce Order Management, supporting or
 - [Database Schema](#database-schema)  
 - [API Endpoints](#api-endpoints)  
 - [Pagination](#pagination)  
-- [Exception Handling](#exception-handling)  
-- [Swagger Documentation](#swagger-documentation)  
+- [Exception Handling](#exception-handling)   
 - [Testing](#testing)  
 - [Setup](#setup)  
 
