@@ -1,5 +1,7 @@
 package com.example.order.dto.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum OrderStatus {
     PENDING("pending"),
     PROCESSING("processing"),
@@ -13,7 +15,7 @@ public enum OrderStatus {
         this.value = value;
     }
 
-    @com.fasterxml.jackson.annotation.JsonValue
+    @JsonValue
     public String getValue() {
         return value;
     }
