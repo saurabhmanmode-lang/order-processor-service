@@ -56,7 +56,7 @@ A Spring Boot backend application for E-commerce Order Management, supporting or
 | updated_at   | DATETIME | Auto-generated last update timestamp    |
 | cancelled_at | DATETIME | Timestamp when order was cancelled       |
 
-**order_items**
+**items**
 
 | Column       | Type    | Description                  |
 | ------------ | ------- | ---------------------------- |
@@ -103,7 +103,7 @@ DELETE /api/order/{orderId}
 Headers: X-Customer-Id: <customerId>
 Response: 200 OK
 
-**Testing**
+## Testing
 
 Unit tests with JUnit 5 and Mockito
 
@@ -111,7 +111,7 @@ Controller, Service, and Exception handling tests included
 
 Code coverage reports available via JaCoCo
 
-**Prerequisites**
+## Prerequisites
 
 Java 17+
 
