@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-processing-service</a> &gt; <a href="index.source.html" class="el_package">com.example.order.service.serviceImpl</a> &gt; <span class="el_source">OrderServiceImpl.java</span></div><h1>OrderServiceImpl.java</h1><pre class="source lang-java linenums">package com.example.order.service.serviceImpl;
+
+import com.example.order.dto.enums.OrderStatus;
+import com.example.order.dto.response.OrderItemResponse;
+import com.example.order.dto.response.OrderResponse;
+import com.example.order.entity.Order;
+import com.example.order.exceptions.BadRequestException;
+import com.example.order.exceptions.NotFoundException;
+import com.example.order.repository.OrderRepository;
+import com.example.order.service.OrderService;
+import com.example.order.utils.OrderMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class OrderServiceImpl implements OrderService {
+
+    private final OrderRepository orderRepository;
+
+<span class="fc" id="L24">    public OrderServiceImpl(OrderRepository orderRepository) {</span>
+<span class="fc" id="L25">        this.orderRepository = orderRepository;</span>
+<span class="fc" id="L26">    }</span>
+
+    @Override
+    public OrderResponse create(Order order) {
+<span class="fc" id="L30">        Order savedOrder = orderRepository.save(order);</span>
+<span class="fc" id="L31">        return OrderMapper.mapToResponse(savedOrder);</span>
+    }
+
+    @Override
+    public OrderResponse getOrderById(Long orderId) {
+<span class="fc" id="L36">        Order order = orderRepository.findById(orderId).orElseThrow(() -&gt; new NotFoundException(&quot;Order not found with ID: &quot; + orderId));</span>
+<span class="fc" id="L37">        return OrderMapper.mapToResponse(order);</span>
+    }
+
+    @Override
+    public List&lt;OrderResponse&gt; getAllOrders(OrderStatus status, int page, int size) {
+<span class="nc" id="L42">        Pageable pageable = PageRequest.of(page, size);</span>
+        Page&lt;Order&gt; orderPage;
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        orderPage = (status != null) ? orderRepository.findByStatus(status, pageable) : orderRepository.findAll(pageable);</span>
+<span class="nc" id="L45">        return orderPage.stream().map(this::mapToResponse).toList();</span>
+    }
+
+    @Override
+    public OrderResponse cancelOrder(Long orderId, Long customerId) {
+        /* assuming customer id with order */
+<span class="fc" id="L51">        Order order = orderRepository.findById(orderId).orElseThrow(() -&gt; new NotFoundException(&quot;Order not found with ID: &quot; + orderId));</span>
+<span class="fc" id="L52">        validateOrderCancellable(order, customerId);</span>
+<span class="fc" id="L53">        order.cancel();</span>
+<span class="fc" id="L54">        orderRepository.save(order);</span>
+<span class="fc" id="L55">        return OrderMapper.mapToResponse(order);</span>
+    }
+
+    private void validateOrderCancellable(Order order, Long customerId) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (!order.getCustomerId().equals(customerId)) {</span>
+<span class="fc" id="L60">            throw new BadRequestException(&quot;You are not authorized to cancel this order&quot;, &quot;UNAUTHORIZED_CANCEL&quot;);</span>
+        }
+
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (!order.isPending()) {</span>
+<span class="fc" id="L65">            throw new BadRequestException(&quot;Order cannot be canceled because it is already &quot; + order.getStatus(), &quot;ORDER_NOT_CANCELLABLE&quot;);</span>
+        }
+<span class="fc" id="L67">    }</span>
+    private OrderResponse mapToResponse(Order savedOrder) {
+<span class="nc" id="L69">        List&lt;OrderItemResponse&gt; itemResponses = savedOrder.getItems().stream().map(i -&gt; new OrderItemResponse(i.getProductId(), i.getProductName(), i.getQuantity(), i.getPrice())).toList(); //</span>
+
+<span class="nc" id="L71">        return new OrderResponse(savedOrder.getId(), savedOrder.getCustomerId(), savedOrder.getStatus(), savedOrder.getTotalAmount(), savedOrder.getCreatedAt(), itemResponses);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

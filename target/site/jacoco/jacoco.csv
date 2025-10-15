@@ -1,0 +1,16 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+order-processing-service,com.example.order.service.serviceImpl,OrderServiceImpl,58,86,2,4,5,17,4,9,3,7
+order-processing-service,com.example.order.jobs,OrderStatusUpdateJob,22,20,1,1,7,6,2,2,1,2
+order-processing-service,com.example.order.dto.response,OrderItemResponse,0,15,0,0,0,1,0,1,0,1
+order-processing-service,com.example.order.dto.response,OrderResponse,0,21,0,0,0,1,0,1,0,1
+order-processing-service,com.example.order.dto.enums,OrderStatus,3,49,0,0,1,10,1,3,1,3
+order-processing-service,com.example.order.controller,OrderController,27,6,0,0,5,3,4,1,4,1
+order-processing-service,com.example.order,OrderProcessingServiceApplication,5,3,0,0,2,1,1,1,1,1
+order-processing-service,com.example.order.dto.request,OrderRequest,0,6,0,0,0,1,0,1,0,1
+order-processing-service,com.example.order.dto.request,OrderItemRequestDTO,0,15,0,0,0,1,0,1,0,1
+order-processing-service,com.example.order.exceptions,ErrorResponse,9,0,0,0,1,0,1,0,1,0
+order-processing-service,com.example.order.exceptions,GlobalExceptionHandler,36,3,0,0,6,1,5,1,5,1
+order-processing-service,com.example.order.exceptions,NotFoundException,7,7,0,0,3,3,1,1,1,1
+order-processing-service,com.example.order.exceptions,BadRequestException,7,7,0,0,3,3,1,1,1,1
+order-processing-service,com.example.order.entity,Order,0,12,0,0,0,4,0,2,0,2
+order-processing-service,com.example.order.utils,OrderMapper,3,99,0,0,1,22,1,7,1,7
